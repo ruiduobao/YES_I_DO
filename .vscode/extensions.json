@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "vitest.explorer",
+    "browserstackcom.nightwatch",
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.EditorConfig",
+    "oxc.oxc-vscode",
+    "esbenp.prettier-vscode"
+  ]
+}
