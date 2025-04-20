@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { ref, reactive, toRef, defineProps, defineEmits, computed } from 'vue'
 
+interface ConsentItem {
+  id: number
+  text: string
+  checked: boolean
+}
+
+interface ConsentOptionsType {
+  basicConsent: ConsentItem[]
+  specificConsent: ConsentItem[]
+  additionalTerms: string
+  timeRange?: string
+}
+
 // 定义组件的属性
 const props = defineProps({
   consentOptions: {
-    type: Object,
+    type: Object as () => ConsentOptionsType,
     required: true,
   },
 })
@@ -16,13 +29,13 @@ const emit = defineEmits(['update:consentOptions'])
 const consentOptions = toRef(props, 'consentOptions')
 
 // 预设的具体同意选项 - 更换为常见亲密行为
-const predefinedSpecificConsent = [
+const predefinedSpecificConsent: ConsentItem[] = [
   { id: 1, text: '我同意双方之间的接吻行为', checked: false },
   { id: 2, text: '我同意双方之间的拥抱和爱抚行为', checked: false },
   { id: 3, text: '我同意双方之间的口头亲密行为', checked: false },
   { id: 4, text: '我同意双方之间的性交行为', checked: false },
   { id: 5, text: '我同意使用安全套等避孕措施', checked: false },
-  { id: 6, text: '我同意拍摄亲密照片或视频', checked: false },
+  { id: 6, text: '我同意拍摄亲密照片或视频（注意：这可能涉及额外的隐私风险）', checked: false },
   { id: 7, text: '我知晓并接受相关的健康安全措施', checked: false },
 ]
 
@@ -40,7 +53,7 @@ const addCustomOption = () => {
     const newOptions = { ...consentOptions.value }
     const newId =
       newOptions.specificConsent.length > 0
-        ? Math.max(...newOptions.specificConsent.map((item) => item.id)) + 1
+        ? Math.max(...newOptions.specificConsent.map((item: ConsentItem) => item.id)) + 1
         : 1
 
     newOptions.specificConsent.push({
@@ -55,9 +68,9 @@ const addCustomOption = () => {
 }
 
 // 更新基础同意选项
-const updateBasicConsent = (id, checked) => {
+const updateBasicConsent = (id: number, checked: boolean) => {
   const newOptions = { ...consentOptions.value }
-  const index = newOptions.basicConsent.findIndex((item) => item.id === id)
+  const index = newOptions.basicConsent.findIndex((item: ConsentItem) => item.id === id)
 
   if (index !== -1) {
     newOptions.basicConsent[index].checked = checked
@@ -66,9 +79,9 @@ const updateBasicConsent = (id, checked) => {
 }
 
 // 更新特定同意选项
-const updateSpecificConsent = (id, checked) => {
+const updateSpecificConsent = (id: number, checked: boolean) => {
   const newOptions = { ...consentOptions.value }
-  const index = newOptions.specificConsent.findIndex((item) => item.id === id)
+  const index = newOptions.specificConsent.findIndex((item: ConsentItem) => item.id === id)
 
   if (index !== -1) {
     newOptions.specificConsent[index].checked = checked
@@ -77,14 +90,16 @@ const updateSpecificConsent = (id, checked) => {
 }
 
 // 删除特定同意选项
-const removeSpecificOption = (id) => {
+const removeSpecificOption = (id: number) => {
   const newOptions = { ...consentOptions.value }
-  newOptions.specificConsent = newOptions.specificConsent.filter((item) => item.id !== id)
+  newOptions.specificConsent = newOptions.specificConsent.filter(
+    (item: ConsentItem) => item.id !== id,
+  )
   emit('update:consentOptions', newOptions)
 }
 
 // 更新补充条款
-const updateAdditionalTerms = (value) => {
+const updateAdditionalTerms = (value: string) => {
   const newOptions = { ...consentOptions.value, additionalTerms: value }
   emit('update:consentOptions', newOptions)
 }
@@ -117,7 +132,7 @@ const addSpecificOption = () => {
   if (newSpecificOption.value.trim()) {
     const newId =
       consentOptions.value.specificConsent.length > 0
-        ? Math.max(...consentOptions.value.specificConsent.map((item) => item.id)) + 1
+        ? Math.max(...consentOptions.value.specificConsent.map((item: ConsentItem) => item.id)) + 1
         : 1
 
     consentOptions.value.specificConsent.push({
@@ -144,6 +159,22 @@ const updateParent = () => {
 const handleChange = () => {
   updateParent()
 }
+
+// 用于事件处理的类型安全函数
+const handleBasicConsentChange = (id: number, event: Event) => {
+  const target = event.target as HTMLInputElement
+  updateBasicConsent(id, target.checked)
+}
+
+const handleSpecificConsentChange = (id: number, event: Event) => {
+  const target = event.target as HTMLInputElement
+  updateSpecificConsent(id, target.checked)
+}
+
+const handleTextareaInput = (event: Event) => {
+  const target = event.target as HTMLTextAreaElement
+  updateAdditionalTerms(target.value)
+}
 </script>
 
 <template>
@@ -161,7 +192,7 @@ const handleChange = () => {
             type="checkbox"
             :checked="item.checked"
             :disabled="true"
-            @change="updateBasicConsent(item.id, $event.target.checked)"
+            @change="(e) => handleBasicConsentChange(item.id, e)"
           />
           <span class="checkbox-text">{{ item.text }}</span>
         </label>
@@ -177,7 +208,7 @@ const handleChange = () => {
           <input
             type="checkbox"
             :checked="item.checked"
-            @change="updateSpecificConsent(item.id, $event.target.checked)"
+            @change="(e) => handleSpecificConsentChange(item.id, e)"
           />
           <span class="checkbox-text">{{ item.text }}</span>
         </label>
@@ -212,7 +243,7 @@ const handleChange = () => {
 
       <textarea
         v-model="consentOptions.additionalTerms"
-        @input="updateAdditionalTerms($event.target.value)"
+        @input="handleTextareaInput"
         placeholder="在此输入双方约定的其他条款内容..."
         rows="4"
       ></textarea>

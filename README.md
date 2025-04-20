@@ -112,3 +112,9 @@ npm run test:e2e -- --debug
 ```sh
 npm run lint
 ```
+
+### Clean
+
+```sh
+npm run clean
+```
