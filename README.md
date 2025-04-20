@@ -1,6 +1,9 @@
 # Yes I Do - 性同意记录应用
 
 一个简单、私密的性同意记录工具，帮助双方明确表达同意意愿，保护双方权益。
+![](http://pics.landcover100.com/i/2025/04/20/6804f7ea0bac0.png)
+
+![](http://pics.landcover100.com/i/2025/04/20/6804f80243351.png)
 
 ## 主要功能
 
