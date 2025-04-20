@@ -22,7 +22,7 @@ import { RouterLink, RouterView } from 'vue-router'
     </main>
 
     <footer>
-      <p>© 2023 Yes I Do - 性同意记录应用</p>
+      <p>© 2025 Yes I Do - 性同意记录应用</p>
       <p>该应用仅作为双方沟通和记录的辅助工具，不构成法律文件。</p>
     </footer>
   </div>

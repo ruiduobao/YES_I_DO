@@ -112,13 +112,12 @@ const updateMetadata = () => {
         </div>
 
         <div class="form-group">
-          <label for="person1-contact">联系方式 <span class="required">*</span></label>
+          <label for="person1-contact">联系方式 <span class="optional">(可选)</span></label>
           <input
             id="person1-contact"
             type="text"
             v-model="localIdentities.person1.contact"
             @change="updateIdentities"
-            required
             placeholder="输入手机号或其他联系方式"
           />
         </div>
@@ -164,13 +163,12 @@ const updateMetadata = () => {
         </div>
 
         <div class="form-group">
-          <label for="person2-contact">联系方式 <span class="required">*</span></label>
+          <label for="person2-contact">联系方式 <span class="optional">(可选)</span></label>
           <input
             id="person2-contact"
             type="text"
             v-model="localIdentities.person2.contact"
             @change="updateIdentities"
-            required
             placeholder="输入手机号或其他联系方式"
           />
         </div>

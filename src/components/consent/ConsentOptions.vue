@@ -15,12 +15,15 @@ const emit = defineEmits(['update:consentOptions'])
 // 创建本地可变引用
 const consentOptions = toRef(props, 'consentOptions')
 
-// 预设的具体同意选项
+// 预设的具体同意选项 - 更换为常见亲密行为
 const predefinedSpecificConsent = [
-  { id: 1, text: '我同意特定行为A', checked: false },
-  { id: 2, text: '我同意特定行为B', checked: false },
-  { id: 3, text: '我同意在特定时间范围内进行上述行为', checked: false },
-  { id: 4, text: '我知晓并接受相关的健康安全措施', checked: false },
+  { id: 1, text: '我同意双方之间的接吻行为', checked: false },
+  { id: 2, text: '我同意双方之间的拥抱和爱抚行为', checked: false },
+  { id: 3, text: '我同意双方之间的口头亲密行为', checked: false },
+  { id: 4, text: '我同意双方之间的性交行为', checked: false },
+  { id: 5, text: '我同意使用安全套等避孕措施', checked: false },
+  { id: 6, text: '我同意拍摄亲密照片或视频', checked: false },
+  { id: 7, text: '我知晓并接受相关的健康安全措施', checked: false },
 ]
 
 // 初始化特定同意选项（如果为空）
@@ -167,7 +170,7 @@ const handleChange = () => {
 
     <div class="options-section">
       <h3>具体同意事项</h3>
-      <p class="section-note">请根据实际情况选择您同意的具体事项</p>
+      <p class="section-note">请选择您同意的具体亲密行为</p>
 
       <div class="option-item" v-for="item in consentOptions.specificConsent" :key="item.id">
         <label class="checkbox-label">
@@ -218,6 +221,7 @@ const handleChange = () => {
     <div class="legal-reminder">
       <h4>撤回权利声明</h4>
       <p>您有权在任何时候撤回同意，该同意书不是永久性的法律约束。</p>
+      <p><strong>重要提示：</strong> 每个人对亲密行为都有自己的界限，请尊重对方的选择和感受。</p>
     </div>
   </div>
 </template>
@@ -362,6 +366,11 @@ textarea:focus {
 .legal-reminder p {
   margin: 0;
   color: #555;
+  margin-bottom: 8px;
+}
+
+.legal-reminder p:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 480px) {
