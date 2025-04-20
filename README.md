@@ -1,6 +1,59 @@
-# yesido
+# Yes I Do - 性同意记录应用
 
-This template should help get you started developing with Vue 3 in Vite.
+一个简单、私密的性同意记录工具，帮助双方明确表达同意意愿，保护双方权益。
+
+## 主要功能
+
+- 📝 明确同意：清晰记录双方同意内容，避免误解和争议
+- ✍️ 电子签名：简单便捷的电子签名功能，确认双方意愿
+- 🔒 隐私保护：数据本地存储，不上传服务器，保护个人隐私
+- 📄 导出记录：支持 PDF 和图片格式导出，方便保存和分享
+
+## 安装与运行
+
+### 依赖安装
+
+项目依赖 `html2canvas` 和 `jspdf` 库实现导出功能。请确保安装了这些依赖：
+
+```bash
+# 使用npm
+npm install
+
+# 或者专门安装导出功能需要的依赖
+npm install html2canvas jspdf
+```
+
+### 开发环境运行
+
+```bash
+npm run dev
+```
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+## 重要提示
+
+此应用仅作为沟通和记录工具，不构成法律文件。不同地区法律规定不同，请谨慎使用。
+
+## 导出功能问题解决
+
+如果在使用导出功能时遇到问题：
+
+1. 确保已安装必要的依赖：`html2canvas` 和 `jspdf`
+2. 重启开发服务器
+3. 清除浏览器缓存后重试
+
+## 隐私声明
+
+所有数据均保存在本地设备上，不会上传到任何服务器。应用不收集任何个人信息。
+
+## 许可
+
+MIT License
 
 ## Recommended IDE Setup
 
@@ -53,7 +106,7 @@ npm run test:e2e -- tests/e2e/example.ts
 # Runs the tests in debug mode
 npm run test:e2e -- --debug
 ```
-    
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
